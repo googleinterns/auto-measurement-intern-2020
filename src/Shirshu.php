@@ -1,4 +1,5 @@
 <?php
+include 'Injector.php';
 
 /**
  * Main Shirshu class
@@ -26,6 +27,13 @@ final class Shirshu{
     protected static $instance = null;
 
     /**
+     * Instance of the event injector
+     *
+     * @var Injector
+     */
+    protected $injector = null;
+
+    /**
      * Returns the main Shirshu instance
      *
      * @see SS()
@@ -45,8 +53,12 @@ final class Shirshu{
         $this->supportedPlugins = array('Contact Form 7', 'Formidable Forms', 'Ninja Forms', 'WooCommerce', 'WPForms', 'WPForms Lite');
     }
 
+    /**
+     * Shirshu constructor
+     */
     private function __construct(){
         $this->defineSupportedPlugins();
+        $this->injector = new Injector($this->supportedPlugins);
     }
 
 }
