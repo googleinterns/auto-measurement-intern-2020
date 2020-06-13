@@ -47,17 +47,10 @@ final class Shirshu{
     }
 
     /**
-     * Create array of supported plugins that Shirshu currently supports
-     */
-    private function defineSupportedPlugins(){
-        $this->supportedPlugins = array('Contact Form 7', 'Formidable Forms', 'Ninja Forms', 'WooCommerce', 'WPForms', 'WPForms Lite');
-    }
-
-    /**
      * Shirshu constructor
      */
     private function __construct(){
-        $this->defineSupportedPlugins();
+        $this->supportedPlugins = array('Contact Form 7', 'Formidable Forms', 'Ninja Forms', 'WooCommerce', 'WPForms', 'WPForms Lite');
         $this->injector = new Injector($this->supportedPlugins);
     }
 

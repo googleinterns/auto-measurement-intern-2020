@@ -35,12 +35,11 @@ class Injector {
      */
     public function setActivePlugins() {
         $this->activePlugins = $this->pluginDetector->getActivePlugins();
-        //$this->printActivePlugins();
     }
 
     public function printActivePlugins() {
-        for ($i = 0; $i < count($this->activePlugins); $i++) {
-            echo $this->activePlugins[$i] . '<br>';
+        foreach($this->activePlugins as $activePlugin){
+            echo $activePlugin . '<br>';
         }
     }
     
