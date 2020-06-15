@@ -1,5 +1,5 @@
 <?php
-include 'Injector.php';
+include 'MeasurementCodeInjector.php';
 
 /**
  * Main Shirshu class
@@ -15,10 +15,6 @@ final class Shirshu{
      */
     private $supportedPlugins;
 
-    protected function getSupportedPlugins(){
-        return $this->supportedPlugins;
-    }
-
     /**
      * Single instance of the class
      *
@@ -29,9 +25,9 @@ final class Shirshu{
     /**
      * Instance of the event injector
      *
-     * @var Injector
+     * @var MeasurementCodeInjector
      */
-    protected $injector = null;
+    protected $measureCodeInjector = null;
 
     /**
      * Returns the main Shirshu instance
@@ -52,7 +48,16 @@ final class Shirshu{
     private function __construct(){
         $this->supportedPlugins = array('Contact Form 7', 'Formidable Forms', 'Ninja Forms', 'WooCommerce', 'WPForms',
             'WPForms Lite');
-        $this->injector = new Injector($this->supportedPlugins);
+        $this->measureCodeInjector = new MeasurementCodeInjector($this->supportedPlugins);
+    }
+
+    /**
+     * Returns a list of plugins that Shirshu supports
+     *
+     * @return array of strings
+     */
+    protected function getSupportedPlugins(){
+        return $this->supportedPlugins;
     }
 
 }

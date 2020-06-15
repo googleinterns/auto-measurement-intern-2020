@@ -1,12 +1,12 @@
 <?php
-include 'Detector.php';
+include 'PluginDetector.php';
 
 /**
  * Injects Javascript based on the current active plugins
  *
  * Class Injector
  */
-class Injector {
+class MeasurementCodeInjector {
     /**
      * A list of user's current active plugins that Shirshu supports
      *
@@ -15,9 +15,9 @@ class Injector {
     private $activePlugins = null;
 
     /**
-     * Plugin Detector
+     * Plugin PluginDetector
      *
-     * @var Detector
+     * @var PluginDetector
      */
     private $pluginDetector = null;
 
@@ -26,7 +26,7 @@ class Injector {
      * @param $supportedPlugins
      */
     public function __construct($supportedPlugins) {
-        $this->pluginDetector = new Detector($supportedPlugins);
+        $this->pluginDetector = new PluginDetector($supportedPlugins);
         add_action('plugins_loaded', array($this, 'setActivePlugins'));
     }
 

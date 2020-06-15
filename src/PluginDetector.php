@@ -9,9 +9,9 @@ if (!function_exists('get_plugins')) {
 /**
  * Detects the user's current active plugins that Shirshu supports
  *
- * Class Detector
+ * Class PluginDetector
  */
-class Detector {
+class PluginDetector {
     /**
      * A list of Shirshu supported plugins
      *
@@ -20,7 +20,7 @@ class Detector {
     private $supportedPlugins = null;
 
     /**
-     * Detector constructor.
+     * PluginDetector constructor.
      * @param $supportedPlugins
      */
     public function __construct($supportedPlugins) {
@@ -37,9 +37,9 @@ class Detector {
         $plugin_keys = array_keys($plugins);
         $activePlugins = array();
 
-        for ($i = 0; $i < count($plugin_keys); $i++) {
-            $potentialPluginName = $plugins[$plugin_keys[$i]]['Name'];
-            if (in_array($potentialPluginName, $this->supportedPlugins) && is_plugin_active( $plugin_keys[$i])) {
+        foreach ($plugin_keys as $plugin_key) {
+            $potentialPluginName = $plugins[$plugin_key]['Name'];
+            if (in_array($potentialPluginName, $this->supportedPlugins) && is_plugin_active( $plugin_key)) {
                 array_push($activePlugins, $potentialPluginName);
             }
         }
