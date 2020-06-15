@@ -1,5 +1,6 @@
 <?php
 include 'PluginDetector.php';
+include 'MeasurementEventFactory.php';
 
 /**
  * Injects Javascript based on the current active plugins
@@ -21,13 +22,17 @@ class MeasurementCodeInjector {
      */
     private $pluginDetector = null;
 
+    private $eventFactory = null;
+
     /**
      * Injector constructor.
      * @param $supportedPlugins
      */
     public function __construct($supportedPlugins) {
         $this->pluginDetector = new PluginDetector($supportedPlugins);
+        $this->eventFactory = MeasurementEventFactory::getInstance();
         add_action('plugins_loaded', array($this, 'setActivePlugins'));
+        add_action('wp_footer', array($this, 'injectEventTracking'));
     }
 
     /**
@@ -43,5 +48,16 @@ class MeasurementCodeInjector {
         }
     }
     
-    //TODO: Inject Javascript to the pages and track the events
+    public function injectEventTracking() {
+        /*foreach($this->activePlugins as $pluginName) {
+            $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);
+            foreach($measurementEventList as $measurementEvent) {
+                echo $measurementEvent->toJavascript();
+            }
+        }*/
+        $measurementEventList = $this->eventFactory->createMeasurementEventList('Woocommerce');
+        foreach($measurementEventList->getEvents() as $measurementEvent) {
+            echo $measurementEvent->toJavascript();
+        }
+    }
 }

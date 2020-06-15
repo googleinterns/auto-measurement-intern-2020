@@ -1,4 +1,5 @@
 <?php
+include 'measurement-events/eventListIncludes.php';
 
 
 class MeasurementEventFactory {
@@ -12,8 +13,14 @@ class MeasurementEventFactory {
         return self::$instance;
     }
 
-    public function createMeasurementEvents($pluginName) {
-        //TODO: create list of events based on plugin name
+    public function createMeasurementEventList($pluginName) {
+        $eventList = null;
+        switch($pluginName) {
+            case 'Woocommerce':
+                $eventList = new WoocommerceEventList();
+                break;
+        }
+        return $eventList;
     }
 
 }

@@ -4,21 +4,12 @@ include 'MeasurementEvent.php';
 
 class MeasurementEventList {
 
-    private static $instance = null;
-
     private $pluginName;
     private $eventCategories;
     private $eventActions;
     private $eventSelectors;
 
     private $measurementEvents;
-
-    public static function getInstance() {
-        if(is_null(self::$instance)){
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
 
     public function getPluginName() {
         return $this->pluginName;

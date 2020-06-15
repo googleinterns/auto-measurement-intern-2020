@@ -18,6 +18,13 @@ class MeasurementEvent {
         $this->eventCssSelector = $selector;
     }
 
+    public function toJavascript() {
+        $result = '<script>document.querySelectorAll(' . '"' . $this->eventCssSelector . '"' . ')[0].addEventListener("click",
+         function(){console.log("Got an event called: ' . $this->eventAction . '"' . ');});</script>';
+        //$result = '<script>console.log(document.querySelectorAll(' . '"' . $this->eventCssSelector . '"' . '));</script>';
+        return $result;
+    }
+
     public function getPluginName() {
         return $this->pluginName;
     }
