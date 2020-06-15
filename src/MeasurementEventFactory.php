@@ -3,7 +3,7 @@
 
 class MeasurementEventFactory {
 
-    protected static $instance = null;
+    private static $instance = null;
 
     public static function getInstance() {
         if(is_null(self::$instance)){
