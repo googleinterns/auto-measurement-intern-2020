@@ -17,7 +17,7 @@ class WoocommerceEventList extends MeasurementEventList {
 
         $tempSelectors = array('.woocommerce-page .add_to_cart_button', '.woocommerce-page .remove',
             'div.wc-proceed-to-checkout .checkout-button', 'a.added_to_cart.wc-forward', 'a.cart-contents',
-            'table.shop_table.shop_table_responsive.cart.woocommerce-cart-form_contents button.button',
+            '.woocommerce-cart-form__contents .coupon ~ .button',
             '.content-area a.woocommerce-LoopProduct-link', '.woocommerce-page .place-order',
             '.woocommerce-page  .place-order');
         $this->setSelectors($tempSelectors);
