@@ -23,6 +23,12 @@ class MeasurementEventFactory {
             case 'WPForms':
                 $eventList = new WPFormsEventList();
                 break;
+            case 'Contact Form 7':
+                $eventList = new CF7EventList();
+                break;
+            case 'Formidable Forms':
+                $eventList = new FormidableFormsEventList();
+                break;
         }
         return $eventList;
     }

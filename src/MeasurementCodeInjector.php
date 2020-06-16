@@ -33,18 +33,19 @@ class MeasurementCodeInjector {
         $this->eventFactory = MeasurementEventFactory::getInstance();
         add_action('plugins_loaded', array($this, 'setActivePlugins'));
         add_action('wp_footer', array($this, 'injectEventTracking'));
-        add_action('wp_footer', array($this, 'test'), 999);
+        add_action('wp_footer', array($this, 'ajax_wc_review_cart_hacked_solution'), 999);
     }
 
-    public function test(){
-        echo '<script>jQuery(function($){
+    public function ajax_wc_review_cart_hacked_solution(){
+        ?>
+            <script>
+                jQuery(function($){
                     $(document.body).on("added_to_cart", function(){
-                        document.querySelectorAll("a.added_to_cart.wc-forward")[0].addEventListener("click", function(){
-                            alert("Got an event: review_cart");
-                        });
+                        alert("Got an event: review_cart");
                     });
                 });
-                </script>';
+            </script>
+        <?php
     }
 
     /**
