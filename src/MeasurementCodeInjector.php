@@ -54,7 +54,6 @@ class MeasurementCodeInjector {
      */
     public function setActivePlugins() {
         $this->activePlugins = $this->pluginDetector->getActivePlugins();
-
         
         //create codeInjectorList
         $this->codeInjectorList = $this->createCodeInjectorList($this->activePlugins);

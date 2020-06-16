@@ -67,8 +67,6 @@ final class Shirshu{
         $this->codeInjectorMap['WPForms'] = new WPFormInjector();
 
 
-
-
         $this->measureCodeInjector = new MeasurementCodeInjector($this->supportedPlugins, $this->codeInjectorMap);
     }
 
