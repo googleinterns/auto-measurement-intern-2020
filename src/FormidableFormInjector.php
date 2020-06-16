@@ -6,8 +6,7 @@ class FormidableFormInjector
     private $eventList = null;
 
     private $event_submitForm =
-        '<script>
-                //let button = document.querySelector("button.frm_button_submit");
+        '<script>                
                 if (document.querySelector("button.frm_button_submit") != null) {
                     document.querySelector("button.frm_button_submit").addEventListener("click", function() {
                         alert("Formidable Forms: Form Submitted");

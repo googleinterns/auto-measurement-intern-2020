@@ -8,7 +8,6 @@ class WPFormInjector
     private $event_submitForm =
         '<script>
                 if (document.querySelector("button.wpforms-submit") != null) {
-                    alert("detected wp");
                     document.querySelector("button.wpforms-submit").addEventListener("click", function() {
                         alert("WPForms: Form Submitted");
                     });

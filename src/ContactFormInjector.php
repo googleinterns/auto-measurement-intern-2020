@@ -9,7 +9,6 @@ class ContactFormInjector {
     private $event_submitForm =
         '<script>
                 if (document.querySelector("input.wpcf7-submit") != null) {
-                    alert("detected 7");
                     document.querySelector("input.wpcf7-submit").addEventListener("click", function() {
                         alert("Contact Form 7: Form Submitted");
                     });
