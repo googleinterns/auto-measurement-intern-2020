@@ -1,5 +1,10 @@
 <?php
 include 'MeasurementCodeInjector.php';
+//include 'ContactFormInjector.php';
+//include 'FormidableFormInjector.php';
+//include 'NinjaFormInjector.php';
+//include 'WoocommerceInjector.php';
+//include 'WPFormInjector.php';
 
 /**
  * Main Shirshu class
@@ -14,6 +19,10 @@ final class Shirshu{
      * @var array of strings
      */
     private $supportedPlugins;
+
+
+    private $codeInjectorMap;
+
 
     /**
      * Single instance of the class
@@ -48,7 +57,19 @@ final class Shirshu{
     private function __construct(){
         $this->supportedPlugins = array('Contact Form 7', 'Formidable Forms', 'Ninja Forms', 'WooCommerce', 'WPForms',
             'WPForms Lite');
-        $this->measureCodeInjector = new MeasurementCodeInjector($this->supportedPlugins);
+
+        $this->codeInjectorMap = array();
+        $this->codeInjectorMap['WooCommerce'] = new WoocommerceInjector();
+        $this->codeInjectorMap['Contact Form 7'] = new ContactFormInjector();
+        $this->codeInjectorMap['Formidable Forms'] = new FormidableFormInjector();
+        $this->codeInjectorMap['Ninja Forms'] = new NinjaFormInjector();
+        $this->codeInjectorMap['WPForms Lite'] = new WPFormInjector();
+        $this->codeInjectorMap['WPForms'] = new WPFormInjector();
+
+
+
+
+        $this->measureCodeInjector = new MeasurementCodeInjector($this->supportedPlugins, $this->codeInjectorMap);
     }
 
     /**

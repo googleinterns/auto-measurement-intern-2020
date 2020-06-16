@@ -1,5 +1,10 @@
 <?php
 include 'PluginDetector.php';
+include 'ContactFormInjector.php';
+include 'FormidableFormInjector.php';
+include 'NinjaFormInjector.php';
+include 'WoocommerceInjector.php';
+include 'WPFormInjector.php';
 
 /**
  * Injects Javascript based on the current active plugins
@@ -21,13 +26,27 @@ class MeasurementCodeInjector {
      */
     private $pluginDetector = null;
 
+
+    private $codeInjectorMap = null;
+
+
+    private $codeInjectorList = null;
+
+
     /**
      * Injector constructor.
      * @param $supportedPlugins
+     * @param $codeInjectorMap
      */
-    public function __construct($supportedPlugins) {
+    public function __construct($supportedPlugins, $codeInjectorMap) {
         $this->pluginDetector = new PluginDetector($supportedPlugins);
+
+
+        $this->codeInjectorMap = $codeInjectorMap;
+
+
         add_action('plugins_loaded', array($this, 'setActivePlugins'));
+
     }
 
     /**
@@ -35,6 +54,14 @@ class MeasurementCodeInjector {
      */
     public function setActivePlugins() {
         $this->activePlugins = $this->pluginDetector->getActivePlugins();
+
+        
+        //create codeInjectorList
+        $this->codeInjectorList = $this->createCodeInjectorList($this->activePlugins);
+
+        //inject the Javascript to the webpage
+        add_action('wp_footer', array($this, 'injectMeasurementCode'));
+
     }
 
     public function printActivePlugins() {
@@ -43,5 +70,23 @@ class MeasurementCodeInjector {
         }
     }
     
-    //TODO: Inject Javascript to the pages and track the events
+
+    public function createCodeInjectorList($activePlugins) {
+        $injectorList = array();
+        foreach ($activePlugins as $activePlugin) {
+            $currentInjector = clone $this->codeInjectorMap[$activePlugin];
+            array_push($injectorList, $currentInjector);
+        }
+        return $injectorList;
+    }
+
+    public function injectMeasurementCode() {
+        foreach ($this->codeInjectorList as $codeInjector) {
+            $codeInjector->injectCode();
+        }
+    }
+
+
+
+
 }
