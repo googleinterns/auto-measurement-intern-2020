@@ -1,5 +1,5 @@
 <?php
-include 'MeasurementEventList.php';
+include_once 'MeasurementEventList.php';
 
 
 class WoocommerceEventList extends MeasurementEventList {

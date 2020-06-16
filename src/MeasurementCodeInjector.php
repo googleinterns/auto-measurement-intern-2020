@@ -61,15 +61,11 @@ class MeasurementCodeInjector {
     }
     
     public function injectEventTracking() {
-        /*foreach($this->activePlugins as $pluginName) {
+        foreach($this->activePlugins as $pluginName) {
             $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);
-            foreach($measurementEventList as $measurementEvent) {
-                echo $measurementEvent->toJavascript();
+            foreach($measurementEventList->getEvents() as $measurementEvent) {
+                $measurementEvent->toJavascript();
             }
-        }*/
-        $measurementEventList = $this->eventFactory->createMeasurementEventList('Woocommerce');
-        foreach($measurementEventList->getEvents() as $measurementEvent) {
-            echo $measurementEvent->toJavascript();
         }
     }
 }

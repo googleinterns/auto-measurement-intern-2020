@@ -16,8 +16,12 @@ class MeasurementEventFactory {
     public function createMeasurementEventList($pluginName) {
         $eventList = null;
         switch($pluginName) {
-            case 'Woocommerce':
+            case 'WooCommerce':
                 $eventList = new WoocommerceEventList();
+                break;
+            case 'WPForms Lite':
+            case 'WPForms':
+                $eventList = new WPFormsEventList();
                 break;
         }
         return $eventList;

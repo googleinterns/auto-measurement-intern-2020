@@ -19,10 +19,16 @@ class MeasurementEvent {
     }
 
     public function toJavascript() {
-        $result = '<script>document.querySelectorAll(' . '"' . $this->eventCssSelector . '"' . ')[0].addEventListener("click",
-         function(){alert("Got an event called: ' . $this->eventAction . '");});</script>';
-        //$result = '<script>console.log(document.querySelectorAll(' . '"' . $this->eventCssSelector . '"' . '));</script>';
-        return $result;
+        ?>
+            <script>
+                nodeList = document.querySelectorAll("<?php echo $this->eventCssSelector;?>");
+                for(node of nodeList) {
+                    node.addEventListener("click", function() {
+                        alert("Got an event called: <?php echo $this->eventAction;?>");
+                    });
+                }
+            </script>
+        <?php
     }
 
     public function getPluginName() {
