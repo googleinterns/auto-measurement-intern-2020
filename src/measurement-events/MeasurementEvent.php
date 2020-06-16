@@ -23,6 +23,7 @@ class MeasurementEvent {
             <script>
                 nodeList = document.querySelectorAll("<?php echo $this->eventCssSelector;?>");
                 for(node of nodeList) {
+                    console.log(node);
                     node.addEventListener("click", function() {
                         alert("Got an event called: <?php echo $this->eventAction;?>");
                     });

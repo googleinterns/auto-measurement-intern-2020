@@ -41,7 +41,12 @@ class MeasurementCodeInjector {
             <script>
                 jQuery(function($){
                     $(document.body).on("added_to_cart", function(){
-                        alert("Got an event: review_cart");
+                        nodeList = document.querySelectorAll('a.added_to_cart.wc-forward');
+                        for(node of nodeList) {
+                            node.addEventListener("click", function(){
+                                alert("Got an event: review_cart");
+                            });
+                        }
                     });
                 });
             </script>
@@ -68,5 +73,14 @@ class MeasurementCodeInjector {
                 $measurementEvent->toJavascript();
             }
         }
+        ?>
+            <script>
+                jQuery(function($){
+                    $("form.woocommerce-checkout").on("submit", function(){
+                        alert("Got an event: place_order");
+                    });
+                });
+            </script>
+        <?php
     }
 }
