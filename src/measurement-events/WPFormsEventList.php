@@ -5,21 +5,15 @@ include_once 'MeasurementEventList.php';
 class WPFormsEventList extends MeasurementEventList {
 
     public function __construct() {
-        $this->setPluginName('WPForms');
-
-        $tempCategories = array('engagement');
-        $this->setCategories($tempCategories);
-
-        $tempActions = array('form_submit');
-        $this->setActions($tempActions);
-
-        $tempSelectors = array('.wpforms-submit-container button');
-        $this->setSelectors($tempSelectors);
+        $pluginName = 'WPForms';
+        $categories = array('engagement');
+        $actions = array('form_submit');
+        $selectors = array('.wpforms-submit-container button');
 
         $tempEvents = array();
-        for($i = 0; $i < count($this->getSelectors()); $i++) {
-            $newEvent = new MeasurementEvent($this->getPluginName(), $this->getCategories()[$i],
-                $this->getActions()[$i], $this->getSelectors()[$i]);
+        for($i = 0; $i < count($selectors); $i++) {
+            $newEvent = new MeasurementEvent($pluginName, $categories[$i],
+                $actions[$i], $selectors[$i]);
             array_push($tempEvents, $newEvent);
         }
         $this->setEvents($tempEvents);
