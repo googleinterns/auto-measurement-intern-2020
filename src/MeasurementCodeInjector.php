@@ -26,10 +26,18 @@ class MeasurementCodeInjector {
      */
     private $pluginDetector = null;
 
-
+    /**
+     * Map of the plugin name to the measurement code injector object customized to each plugin
+     *
+     * @var array
+     */
     private $codeInjectorMap = null;
 
-
+    /**
+     * List of code injector of active plugins
+     *
+     * @var array
+     */
     private $codeInjectorList = null;
 
 
@@ -41,26 +49,41 @@ class MeasurementCodeInjector {
     public function __construct($supportedPlugins, $codeInjectorMap) {
         $this->pluginDetector = new PluginDetector($supportedPlugins);
 
-
         $this->codeInjectorMap = $codeInjectorMap;
 
-
-        add_action('plugins_loaded', array($this, 'setActivePlugins'));
-
+        add_action('plugins_loaded', array($this, 'injectMeasurementCode'));
     }
 
     /**
-     * Determines active plugins once WordPress loads plugins
+     * Determines active plugins once WordPress loads plugins and injects measurement code to the web page
      */
-    public function setActivePlugins() {
+    public function injectMeasurementCode() {
         $this->activePlugins = $this->pluginDetector->getActivePlugins();
-        
-        //create codeInjectorList
+
         $this->codeInjectorList = $this->createCodeInjectorList($this->activePlugins);
 
-        //inject the Javascript to the webpage
-        add_action('wp_footer', array($this, 'injectMeasurementCode'));
+        add_action('wp_footer', array($this, 'injectCodeList'));
+        add_action('wp_footer', array($this, 'woocommerce_ajax_review_cart'), 999);
+    }
 
+    /**
+     * Injects code for review cart button of WooCommerce
+     */
+    public function woocommerce_ajax_review_cart() {
+        echo '
+        <script>
+            jQuery(function($) {
+                $(document.body).on("added_to_cart", function() {
+                    if (document.querySelector("a.added_to_cart.wc-forward") != null) {
+
+                        document.querySelector("a.added_to_cart.wc-forward").addEventListener("click", function() {
+                            alert("Woocommerce: Review Cart");
+                        });
+                    }
+                });
+            });
+        </script>
+        ';
     }
 
     public function printActivePlugins() {
@@ -68,8 +91,13 @@ class MeasurementCodeInjector {
             echo $activePlugin . '<br>';
         }
     }
-    
 
+    /**
+     * Returns a list of code injectors for the active plugins
+     *
+     * @param $activePlugins
+     * @return array
+     */
     public function createCodeInjectorList($activePlugins) {
         $injectorList = array();
         foreach ($activePlugins as $activePlugin) {
@@ -79,13 +107,13 @@ class MeasurementCodeInjector {
         return $injectorList;
     }
 
-    public function injectMeasurementCode() {
+    /**
+     * Injects the code in the code injector list
+     */
+    public function injectCodeList() {
         foreach ($this->codeInjectorList as $codeInjector) {
             $codeInjector->injectCode();
         }
     }
-
-
-
 
 }

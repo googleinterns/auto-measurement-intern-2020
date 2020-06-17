@@ -1,10 +1,5 @@
 <?php
 include 'MeasurementCodeInjector.php';
-//include 'ContactFormInjector.php';
-//include 'FormidableFormInjector.php';
-//include 'NinjaFormInjector.php';
-//include 'WoocommerceInjector.php';
-//include 'WPFormInjector.php';
 
 /**
  * Main Shirshu class
@@ -20,7 +15,11 @@ final class Shirshu{
      */
     private $supportedPlugins;
 
-
+    /**
+     * Map of the plugin name to the measurement code injector object customized to each plugin
+     *
+     * @var array of objects
+     */
     private $codeInjectorMap;
 
 
@@ -65,7 +64,6 @@ final class Shirshu{
         $this->codeInjectorMap['Ninja Forms'] = new NinjaFormInjector();
         $this->codeInjectorMap['WPForms Lite'] = new WPFormInjector();
         $this->codeInjectorMap['WPForms'] = new WPFormInjector();
-
 
         $this->measureCodeInjector = new MeasurementCodeInjector($this->supportedPlugins, $this->codeInjectorMap);
     }
