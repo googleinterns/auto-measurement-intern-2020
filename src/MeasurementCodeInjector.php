@@ -32,25 +32,7 @@ class MeasurementCodeInjector {
         $this->pluginDetector = new PluginDetector($supportedPlugins);
         $this->eventFactory = MeasurementEventFactory::getInstance();
         add_action('plugins_loaded', array($this, 'setActivePlugins'));
-        add_action('wp_footer', array($this, 'injectEventTracking'));
-        add_action('wp_footer', array($this, 'ajax_wc_review_cart_hacked_solution'), 999);
-    }
-
-    public function ajax_wc_review_cart_hacked_solution(){
-        ?>
-            <script>
-                jQuery(function($){
-                    $(document.body).on("added_to_cart", function(){
-                        nodeList = document.querySelectorAll('a.added_to_cart.wc-forward');
-                        for(node of nodeList) {
-                            node.addEventListener("click", function(){
-                                alert("Got an event: review_cart");
-                            });
-                        }
-                    });
-                });
-            </script>
-        <?php
+        add_action('wp_footer', array($this, 'injectEventTracking'), 999);
     }
 
     /**
@@ -75,14 +57,5 @@ class MeasurementCodeInjector {
                 }
             }
         }
-        ?>
-            <script>
-                jQuery(function($){
-                    $("form.woocommerce-checkout").on("submit", function(){
-                        alert("Got an event: place_order");
-                    });
-                });
-            </script>
-        <?php
     }
 }
