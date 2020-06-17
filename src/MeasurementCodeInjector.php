@@ -22,6 +22,11 @@ class MeasurementCodeInjector {
      */
     private $pluginDetector = null;
 
+    /**
+     * MeasurementEventFactory instance
+     *
+     * @var MeasurementEventFactory
+     */
     private $eventFactory = null;
 
     /**
@@ -47,7 +52,10 @@ class MeasurementCodeInjector {
             echo $activePlugin . '<br>';
         }
     }
-    
+
+    /**
+     * Creates needed MeasurementEvent objects and convert them to javascript
+     */
     public function injectEventTracking() {
         foreach($this->activePlugins as $pluginName) {
             $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);
