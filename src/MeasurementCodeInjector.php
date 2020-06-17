@@ -69,8 +69,10 @@ class MeasurementCodeInjector {
     public function injectEventTracking() {
         foreach($this->activePlugins as $pluginName) {
             $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);
-            foreach($measurementEventList->getEvents() as $measurementEvent) {
-                $measurementEvent->toJavascript();
+            if($measurementEventList != null) {
+                foreach ($measurementEventList->getEvents() as $measurementEvent) {
+                    $measurementEvent->toJavascript();
+                }
             }
         }
         ?>

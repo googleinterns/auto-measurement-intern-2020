@@ -29,6 +29,9 @@ class MeasurementEventFactory {
             case 'Formidable Forms':
                 $eventList = new FormidableFormsEventList();
                 break;
+            case 'Ninja Forms':
+                $eventList = new NinjaFormsEventList();
+                break;
         }
         return $eventList;
     }

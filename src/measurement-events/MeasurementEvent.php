@@ -19,17 +19,31 @@ class MeasurementEvent {
     }
 
     public function toJavascript() {
-        ?>
+        if($this->pluginName != 'Ninja Forms') {
+            ?>
             <script>
                 nodeList = document.querySelectorAll("<?php echo $this->eventCssSelector;?>");
-                for(node of nodeList) {
-                    console.log(node);
-                    node.addEventListener("click", function() {
+                for (node of nodeList) {
+                    node.addEventListener("click", function () {
                         alert("Got an event called: <?php echo $this->eventAction;?>");
                     });
                 }
             </script>
-        <?php
+            <?php
+        }else{
+            ?>
+            <script>
+                jQuery(document).on("nfFormReady", function(e, layoutView){
+                    let nodeList = document.querySelectorAll('div.nf-field-container.submit-container [type="button"]');
+                    for(node of nodeList) {
+                        node.addEventListener("click", function(){
+                            alert("Got an event called: <?php echo $this->eventAction; ?>");
+                        });
+                    }
+                })
+            </script>
+            <?php
+        }
     }
 
     public function getPluginName() {
