@@ -14,11 +14,14 @@ class CF7EventList extends MeasurementEventList {
         $categories = array('engagement');
         $actions = array('contact_form_submit');
         $selectors = array('.wpcf7-form .wpcf7-submit');
+        $onEvents = array('click');
+        $secondLayerSelectors = array(null);
+        $secondLayerOn = array(null);
 
         $tempEvents = array();
         for($i = 0; $i < count($selectors); $i++) {
             $newEvent = new MeasurementEvent($pluginName, $categories[$i],
-                $actions[$i], $selectors[$i]);
+                $actions[$i], $selectors[$i], $onEvents[$i], $secondLayerSelectors[$i], $secondLayerOn[$i]);
             array_push($tempEvents, $newEvent);
         }
         $this->setEvents($tempEvents);

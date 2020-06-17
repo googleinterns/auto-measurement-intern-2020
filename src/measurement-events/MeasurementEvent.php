@@ -36,18 +36,28 @@ class MeasurementEvent {
      */
     private $eventCssSelector;
 
+    private $onEvent;
+
+    private $secondLayerSelector;
+
+    private $secondLayerOnEvent;
+
     /**
      * MeasurementEvent constructor.
      * @param $pluginName - string
      * @param $category - string
      * @param $action - string
      * @param $selector - string
+     * @param $on - string
      */
-    public function __construct($pluginName, $category, $action, $selector) {
+    public function __construct($pluginName, $category, $action, $selector, $on, $secondLayerSelector = null, $secondLayerOn = null) {
         $this->pluginName = $pluginName;
         $this->eventCategory = $category;
         $this->eventAction = $action;
         $this->eventCssSelector = $selector;
+        $this->onEvent = $on;
+        $this->secondLayerSelector = $secondLayerSelector;
+        $this->secondLayerOnEvent = $secondLayerOn;
     }
 
     /**
@@ -161,6 +171,18 @@ class MeasurementEvent {
 
     public function getSelector() {
         return $this->eventCssSelector;
+    }
+
+    public function getOnEvent() {
+        return $this->onEvent;
+    }
+
+    public function getSecondLayerSelector() {
+        return $this->secondLayerSelector;
+    }
+
+    public function getSecondLayerOnEvent() {
+        return $this->secondLayerOnEvent;
     }
 
 }

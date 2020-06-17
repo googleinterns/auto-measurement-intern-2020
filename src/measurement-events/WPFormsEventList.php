@@ -14,11 +14,14 @@ class WPFormsEventList extends MeasurementEventList {
         $categories = array('engagement');
         $actions = array('form_submit');
         $selectors = array('.wpforms-submit-container button');
+        $onEvents = array('click');
+        $secondLayerSelectors = array(null);
+        $secondLayerOn = array(null);
 
         $tempEvents = array();
         for($i = 0; $i < count($selectors); $i++) {
             $newEvent = new MeasurementEvent($pluginName, $categories[$i],
-                $actions[$i], $selectors[$i]);
+                $actions[$i], $selectors[$i], $onEvents[$i], $secondLayerSelectors[$i], $secondLayerOn[$i]);
             array_push($tempEvents, $newEvent);
         }
         $this->setEvents($tempEvents);

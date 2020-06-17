@@ -13,17 +13,21 @@ class WoocommerceEventList extends MeasurementEventList {
         $pluginName = 'Woocommerce';
         $categories = array('ecommerce', 'ecommerce', 'ecommerce', 'ecommerce', 'ecommerce', 'ecommerce', 'ecommerce',
             'ecommerce', 'ecommerce', 'ecommerce');
-        $actions = array('add_to_cart', 'add_to_cart', 'remove_from_cart', 'checkout', 'review_cart', 'review_cart', 'cart_contents',
-            'update_cart', 'product_details', 'place_order');
-        $selectors = array('.woocommerce-page .add_to_cart_button', '.woocommerce-page .single_add_to_cart_button', '.woocommerce-page .remove',
-            'div.wc-proceed-to-checkout .checkout-button', 'a.added_to_cart.wc-forward', 'div.woocommerce-message a.wc-forward', 'a.cart-contents',
-            '.woocommerce-cart-form__contents .coupon ~ .button',
-            '.content-area a.woocommerce-LoopProduct-link', '.woocommerce-page .place-order button.button');
+        $actions = array('add_to_cart', 'add_to_cart', 'remove_from_cart', 'checkout', 'review_cart', 'review_cart',
+            'cart_contents', 'update_cart', 'product_details', 'place_order');
+        $selectors = array('.woocommerce-page .add_to_cart_button', '.woocommerce-page .single_add_to_cart_button',
+            '.woocommerce-page .remove', 'div.wc-proceed-to-checkout .checkout-button', 'a.added_to_cart.wc-forward',
+            'div.woocommerce-message a.wc-forward', 'a.cart-contents',
+            '.woocommerce-cart-form__contents .coupon ~ .button', '.content-area a.woocommerce-LoopProduct-link',
+            '.woocommerce-page form.woocommerce-checkout');
+        $onEvents = array('click', 'click', 'click', 'click', 'click', 'click', 'click', 'click', 'click', 'submit');
+        $secondLayerSelectors = array(null, null, null, null, 'document.body', null, null, null, null, null);
+        $secondLayerOn = array(null, null, null, null, 'added_to_cart', null, null, null, null, null);
 
         $tempEvents = array();
         for($i = 0; $i < count($selectors); $i++) {
             $newEvent = new MeasurementEvent($pluginName, $categories[$i],
-                $actions[$i], $selectors[$i]);
+                $actions[$i], $selectors[$i], $onEvents[$i], $secondLayerSelectors[$i], $secondLayerOn[$i]);
             array_push($tempEvents, $newEvent);
         }
         $this->setEvents($tempEvents);
