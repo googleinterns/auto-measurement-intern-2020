@@ -2,6 +2,11 @@
 include_once 'MeasurementEventList.php';
 
 
+/**
+ * Subclass that contains information for Woocommerce plugin
+ *
+ * @class WoocommerceEventList
+ */
 class WoocommerceEventList extends MeasurementEventList {
 
     public function __construct() {

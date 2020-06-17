@@ -2,6 +2,11 @@
 include_once 'MeasurementEventList.php';
 
 
+/**
+ * Subclass that contains information for Contact Form 7 plugin
+ *
+ * @class CF7EventList
+ */
 class CF7EventList extends MeasurementEventList {
 
     public function __construct() {

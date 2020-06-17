@@ -2,6 +2,11 @@
 include_once 'MeasurementEventList.php';
 
 
+/**
+ * Subclass that contains information for Ninja Forms plugin
+ *
+ * @class NinjaFormsEventList
+ */
 class NinjaFormsEventList extends MeasurementEventList {
 
     public function __construct() {

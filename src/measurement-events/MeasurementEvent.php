@@ -1,16 +1,48 @@
 <?php
 
 
+/**
+ * Represents a single event that Shirshu tracks
+ *
+ * @class MeasurementEvent
+ */
 class MeasurementEvent {
 
+    /**
+     * The plugin that this event is associated with
+     *
+     * @var string
+     */
     private $pluginName;
 
+    /**
+     * Event category e.g. ecommerce, engagement
+     *
+     * @var string
+     */
     private $eventCategory;
 
+    /**
+     * Name of specific event
+     *
+     * @var string
+     */
     private $eventAction;
 
+    /**
+     * CSS selector used to grab element that this event is tied to
+     *
+     * @var string
+     */
     private $eventCssSelector;
 
+    /**
+     * MeasurementEvent constructor.
+     * @param $pluginName - string
+     * @param $category - string
+     * @param $action - string
+     * @param $selector - string
+     */
     public function __construct($pluginName, $category, $action, $selector) {
         $this->pluginName = $pluginName;
         $this->eventCategory = $category;
@@ -18,6 +50,9 @@ class MeasurementEvent {
         $this->eventCssSelector = $selector;
     }
 
+    /**
+     * Produces Javascript that listens to this event
+     */
     public function toJavascript() {
         switch($this->pluginName) {
             case 'Woocommerce':
@@ -43,6 +78,9 @@ class MeasurementEvent {
         }
     }
 
+    /**
+     * Standard case javascript for elements that are loaded with the main page
+     */
     private function defaultSol() {
         ?>
         <script>
@@ -56,6 +94,9 @@ class MeasurementEvent {
         <?php
     }
 
+    /**
+     * Review_cart event case: element is loaded on page after certain event
+     */
     private function wcReviewCartTempSol() {
         ?>
         <script>
@@ -73,6 +114,9 @@ class MeasurementEvent {
         <?php
     }
 
+    /**
+     * Place_order event case: element's click handler is overwritten
+     */
     private function wcPlaceOrderTempSol() {
         ?>
         <script>
@@ -85,11 +129,14 @@ class MeasurementEvent {
         <?php
     }
 
+    /**
+     * Ninja Forms submit_form case: form is loaded with ajax after main page loaded
+     */
     private function ninjaFormsTempSol() {
         ?>
         <script>
             jQuery(document).on("nfFormReady", function(e, layoutView){
-                let nodeList = document.querySelectorAll('div.nf-field-container.submit-container [type="button"]');
+                let nodeList = document.querySelectorAll("<?php echo $this->eventCssSelector; ?>");
                 for(node of nodeList) {
                     node.addEventListener("click", function(){
                         alert("Got an event called: <?php echo $this->eventAction; ?>");

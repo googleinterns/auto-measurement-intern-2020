@@ -2,6 +2,11 @@
 include_once 'MeasurementEventList.php';
 
 
+/**
+ * Subclass that contains information for Formidable Forms plugin
+ *
+ * @class FormidableFormsEventList
+ */
 class FormidableFormsEventList extends MeasurementEventList {
 
     public function __construct() {
