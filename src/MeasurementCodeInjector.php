@@ -15,6 +15,11 @@ class MeasurementCodeInjector {
      */
     private $activePlugins = null;
 
+    /**
+     * Holds a list of event configurations to be injected
+     *
+     * @var array
+     */
     private $eventConfigurations;
 
     /**
@@ -78,7 +83,6 @@ class MeasurementCodeInjector {
              */
             function addListeners(config) {
                 let nodeList = document.querySelectorAll(config.selector);
-                console.log(config);
                 for(node of nodeList) {
                     if(!ninjaFormsAddedNodes.includes(node)) {
                         node.addEventListener(config.on, function () {

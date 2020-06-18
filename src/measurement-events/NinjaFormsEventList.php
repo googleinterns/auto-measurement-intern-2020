@@ -13,10 +13,8 @@ class NinjaFormsEventList extends MeasurementEventList {
         $pluginName = 'Ninja Forms';
         $categories = array('engagement');
         $actions = array('form_submit');
-        //$selectors = array('div.nf-field-container.submit-container [type="button"]');
-        $selectors = array('div.nf-form-content form');
-        //$onEvents = array('click');
-        $onEvents = array('submit');
+        $selectors = array('div.nf-field-container.submit-container [type="button"]');
+        $onEvents = array('click');
         $secondLayerSelectors = array('document');
         $secondLayerOn = array('nfFormReady');
 
