@@ -36,10 +36,25 @@ class MeasurementEvent {
      */
     private $eventCssSelector;
 
+    /**
+     * Inner layer event to bind to in order to track the event
+     *
+     * @var string
+     */
     private $onEvent;
 
+    /**
+     * Selector for element that contains the event to bind to when inner element is ready to be tracked.
+     *
+     * @var string
+     */
     private $secondLayerSelector;
 
+    /**
+     * Second layer event to bind to that says when element is ready to be tracked
+     *
+     * @var string
+     */
     private $secondLayerOnEvent;
 
     /**

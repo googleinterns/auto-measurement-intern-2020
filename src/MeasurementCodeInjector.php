@@ -50,30 +50,35 @@ class MeasurementCodeInjector {
         $this->activePlugins = $this->pluginDetector->getActivePlugins();
     }
 
-    public function printActivePlugins() {
-        foreach($this->activePlugins as $activePlugin){
-            echo $activePlugin . '<br>';
-        }
-    }
-
     /**
-     * Creates needed MeasurementEvent objects and convert them to javascript
+     * Creates list of measurement event configurations and javascript to inject
      */
     public function injectEventTracking() {
         foreach($this->activePlugins as $pluginName) {
             $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);
             if($measurementEventList != null) {
                 foreach ($measurementEventList->getEvents() as $measurementEvent) {
-                    $this->addEventToList($measurementEvent);
+                    $this->configureEvent($measurementEvent);
                 }
             }
         }
         ?>
         <script>
+            /**
+             * Keeps track of Ninja forms that have already been tracked
+             *
+             * @type Array of elements
+             */
             let ninjaFormsAddedNodes = [];
+
+            /**
+             * Adds event listener to element that corresponds to the event
+             *
+             * @param config - configuration for a trackable event
+             */
             function addListeners(config) {
-                console.log(config);
                 let nodeList = document.querySelectorAll(config.selector);
+                console.log(config);
                 for(node of nodeList) {
                     if(!ninjaFormsAddedNodes.includes(node)) {
                         node.addEventListener(config.on, function () {
@@ -84,6 +89,9 @@ class MeasurementCodeInjector {
                 }
             }
 
+            /**
+             * Adds first or second layer event listeners on DOM loaded
+             */
             jQuery(function($){
                 let eventConfigurations = <?php echo json_encode($this->eventConfigurations); ?>;
                 for(config of eventConfigurations) {
@@ -113,7 +121,12 @@ class MeasurementCodeInjector {
         <?php
     }
 
-    private function addEventToList($measurementEvent) {
+    /**
+     * Creates a config object from MeasurementEvent object and adds it to list to be injected
+     *
+     * @param $measurementEvent - MeasurementEvent
+     */
+    private function configureEvent($measurementEvent) {
         $newEvent = array();
         $newEvent['pluginName'] = $measurementEvent->getPluginName();
         $newEvent['category'] = $measurementEvent->getCategory();
