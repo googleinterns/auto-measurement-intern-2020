@@ -63,7 +63,7 @@ class MeasurementCodeInjector {
             $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);
             if($measurementEventList != null) {
                 foreach ($measurementEventList->getEvents() as $measurementEvent) {
-                    $this->configureEvent($measurementEvent);
+                    array_push($this->eventConfigurations, $measurementEvent);
                 }
             }
         }
@@ -123,22 +123,5 @@ class MeasurementCodeInjector {
             });
         </script>
         <?php
-    }
-
-    /**
-     * Creates a config object from MeasurementEvent object and adds it to list to be injected
-     *
-     * @param $measurementEvent - MeasurementEvent
-     */
-    private function configureEvent($measurementEvent) {
-        $newEvent = array();
-        $newEvent['pluginName'] = $measurementEvent->getPluginName();
-        $newEvent['category'] = $measurementEvent->getCategory();
-        $newEvent['action'] = $measurementEvent->getAction();
-        $newEvent['selector'] = $measurementEvent->getSelector();
-        $newEvent['on'] = $measurementEvent->getOnEvent();
-        $newEvent['secondLayerSelector'] = $measurementEvent->getSecondLayerSelector();
-        $newEvent['secondLayerOn'] = $measurementEvent->getSecondLayerOnEvent();
-        array_push($this->eventConfigurations, $newEvent);
     }
 }

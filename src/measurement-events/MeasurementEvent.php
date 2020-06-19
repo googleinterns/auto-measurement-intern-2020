@@ -6,7 +6,7 @@
  *
  * @class MeasurementEvent
  */
-class MeasurementEvent {
+class MeasurementEvent implements JsonSerializable {
 
     /**
      * The plugin that this event is associated with
@@ -73,6 +73,18 @@ class MeasurementEvent {
         $this->onEvent = $on;
         $this->secondLayerSelector = $secondLayerSelector;
         $this->secondLayerOnEvent = $secondLayerOn;
+    }
+
+    public function jsonSerialize() {
+        return [
+            'pluginName' => $this->getPluginName(),
+            'category' => $this->getCategory(),
+            'action' => $this->getAction(),
+            'selector' => $this->getSelector(),
+            'on' => $this->getOnEvent(),
+            'secondLayerSelector' => $this->getSecondLayerSelector(),
+            'secondLayerOn' => $this->getSecondLayerOnEvent()
+        ];
     }
 
     public function getPluginName() {
