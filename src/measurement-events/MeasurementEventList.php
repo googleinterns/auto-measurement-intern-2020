@@ -14,14 +14,14 @@ class MeasurementEventList {
      *
      * @var MeasurementEvent[]
      */
-    private $measurementEvents;
+    private $measurementEvents = array();
+
+    protected function addEvent(MeasurementEvent $e) {
+        array_push($this->measurementEvents, $e);
+    }
 
     public function getEvents() {
         return $this->measurementEvents;
-    }
-
-    protected function setEvents($events) {
-        $this->measurementEvents = $events;
     }
 
 }

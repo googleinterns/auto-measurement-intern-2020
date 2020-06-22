@@ -10,27 +10,55 @@ include_once 'MeasurementEventList.php';
 class WoocommerceEventList extends MeasurementEventList {
 
     public function __construct() {
-        $pluginName = 'Woocommerce';
-        $categories = array('ecommerce', 'ecommerce', 'ecommerce', 'ecommerce', 'ecommerce', 'ecommerce', 'ecommerce',
-            'ecommerce', 'ecommerce', 'ecommerce');
-        $actions = array('add_to_cart', 'add_to_cart', 'remove_from_cart', 'checkout', 'review_cart', 'review_cart',
-            'cart_contents', 'update_cart', 'product_details', 'place_order');
-        $selectors = array('.woocommerce-page .add_to_cart_button', '.woocommerce-page .single_add_to_cart_button',
-            '.woocommerce-page .remove', 'div.wc-proceed-to-checkout .checkout-button', 'a.added_to_cart.wc-forward',
-            'div.woocommerce-message a.wc-forward', 'a.cart-contents',
-            '.woocommerce-cart-form__contents .coupon ~ .button', '.content-area a.woocommerce-LoopProduct-link',
-            '.woocommerce-page form.woocommerce-checkout');
-        $onEvents = array('click', 'click', 'click', 'click', 'click', 'click', 'click', 'click', 'click', 'submit');
-        $secondLayerSelectors = array(null, null, null, null, 'document.body', null, null, null, null, null);
-        $secondLayerOn = array(null, null, null, null, 'added_to_cart', null, null, null, null, null);
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('add_to_cart')->selector('.woocommerce-page .add_to_cart_button');
+        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
 
-        $tempEvents = array();
-        for($i = 0; $i < count($selectors); $i++) {
-            $newEvent = new MeasurementEvent($pluginName, $categories[$i],
-                $actions[$i], $selectors[$i], $onEvents[$i], $secondLayerSelectors[$i], $secondLayerOn[$i]);
-            array_push($tempEvents, $newEvent);
-        }
-        $this->setEvents($tempEvents);
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('add_to_cart')->selector('.woocommerce-page .single_add_to_cart_button');
+        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('remove_from_cart')->selector('.woocommerce-page .remove');
+        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('checkout')->selector('div.wc-proceed-to-checkout .checkout-button');
+        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('review_cart')->selector('a.added_to_cart.wc-forward');
+        $builder->on('click')->secondLayerSelector('document.body')->secondLayerOn('added_to_cart');
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('review_cart')->selector('div.woocommerce-message a.wc-forward');
+        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('cart_contents')->selector('a.cart-contents');
+        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('update_cart')->selector('.woocommerce-cart-form__contents .coupon ~ .button');
+        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('product_details')->selector('.content-area a.woocommerce-LoopProduct-link');
+        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder('Woocommerce')->category('ecommerce');
+        $builder->action('place_order')->selector('.woocommerce-page form.woocommerce-checkout');
+        $builder->on('submit')->secondLayerSelector(null)->secondLayerOn(null);
+        $this->addEvent($builder->build());
     }
 
 }

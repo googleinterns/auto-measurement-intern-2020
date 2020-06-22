@@ -1,5 +1,92 @@
 <?php
 
+/**
+ * Use to instantiate MeasurementEvent objects
+ *
+ * @class MeasurementEventBuilder
+ */
+class MeasurementEventBuilder {
+
+    private $pluginName;
+    private $eventCategory;
+    private $eventAction;
+    private $eventCssSelector;
+    private $onEvent;
+    private $secondLayerSelector;
+    private $secondLayerOnEvent;
+
+    function __construct($plugin) {
+        $this->pluginName = $plugin;
+    }
+
+    function category($c) {
+        $this->eventCategory = $c;
+        return $this;
+    }
+
+    function action($a) {
+        $this->eventAction = $a;
+        return $this;
+    }
+
+    function selector($s) {
+        $this->eventCssSelector = $s;
+        return $this;
+    }
+
+    function on($o) {
+        $this->onEvent = $o;
+        return $this;
+    }
+
+    function secondLayerSelector($ss) {
+        $this->secondLayerSelector = $ss;
+        return $this;
+    }
+
+    function secondLayerOn($so) {
+        $this->secondLayerOnEvent = $so;
+        return $this;
+    }
+
+    function getPluginName() {
+        return $this->pluginName;
+    }
+
+    function getCategory() {
+        return $this->eventCategory;
+    }
+
+    function getAction() {
+        return $this->eventAction;
+    }
+
+    function getSelector() {
+        return $this->eventCssSelector;
+    }
+
+    function getOn() {
+        return $this->onEvent;
+    }
+
+    function getSecondSelector() {
+        return $this->secondLayerSelector;
+    }
+
+    function getSecondOn() {
+        return $this->secondLayerOnEvent;
+    }
+
+    /**
+     * returns MeasurementEvent object once all params have been set
+     *
+     * @return MeasurementEvent
+     */
+    function build() {
+        return new MeasurementEvent($this);
+    }
+
+}
 
 /**
  * Represents a single event that Shirshu tracks
@@ -57,62 +144,30 @@ class MeasurementEvent implements JsonSerializable {
      */
     private $secondLayerOnEvent;
 
-    /**
-     * MeasurementEvent constructor.
-     * @param $pluginName - string
-     * @param $category - string
-     * @param $action - string
-     * @param $selector - string
-     * @param $on - string
-     */
-    public function __construct($pluginName, $category, $action, $selector, $on, $secondLayerSelector = null, $secondLayerOn = null) {
-        $this->pluginName = $pluginName;
-        $this->eventCategory = $category;
-        $this->eventAction = $action;
-        $this->eventCssSelector = $selector;
-        $this->onEvent = $on;
-        $this->secondLayerSelector = $secondLayerSelector;
-        $this->secondLayerOnEvent = $secondLayerOn;
+    static function createBuilder($plugin) {
+        return new MeasurementEventBuilder($plugin);
+    }
+
+    function __construct(MeasurementEventBuilder $builder) {
+        $this->pluginName = $builder->getPluginName();
+        $this->eventCategory = $builder->getCategory();
+        $this->eventAction = $builder->getAction();
+        $this->eventCssSelector = $builder->getSelector();
+        $this->onEvent = $builder->getOn();
+        $this->secondLayerSelector = $builder->getSecondSelector();
+        $this->secondLayerOnEvent = $builder->getSecondOn();
     }
 
     public function jsonSerialize() {
         return [
-            'pluginName' => $this->getPluginName(),
-            'category' => $this->getCategory(),
-            'action' => $this->getAction(),
-            'selector' => $this->getSelector(),
-            'on' => $this->getOnEvent(),
-            'secondLayerSelector' => $this->getSecondLayerSelector(),
-            'secondLayerOn' => $this->getSecondLayerOnEvent()
+            'pluginName' => $this->pluginName,
+            'category' => $this->eventCategory,
+            'action' => $this->eventAction,
+            'selector' => $this->eventCssSelector,
+            'on' => $this->onEvent,
+            'secondLayerSelector' => $this->secondLayerSelector,
+            'secondLayerOn' => $this->secondLayerOnEvent
         ];
-    }
-
-    public function getPluginName() {
-        return $this->pluginName;
-    }
-
-    public function getCategory() {
-        return $this->eventCategory;
-    }
-
-    public function getAction() {
-        return $this->eventAction;
-    }
-
-    public function getSelector() {
-        return $this->eventCssSelector;
-    }
-
-    public function getOnEvent() {
-        return $this->onEvent;
-    }
-
-    public function getSecondLayerSelector() {
-        return $this->secondLayerSelector;
-    }
-
-    public function getSecondLayerOnEvent() {
-        return $this->secondLayerOnEvent;
     }
 
 }

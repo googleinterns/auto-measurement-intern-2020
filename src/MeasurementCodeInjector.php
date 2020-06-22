@@ -98,6 +98,7 @@ class MeasurementCodeInjector {
              */
             jQuery(function($){
                 let eventConfigurations = <?php echo json_encode($this->eventConfigurations); ?>;
+                console.log(eventConfigurations);
                 for(config of eventConfigurations) {
                     if(config.secondLayerOn === null) {
                         addListeners(config);
