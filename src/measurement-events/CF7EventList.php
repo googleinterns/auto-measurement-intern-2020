@@ -10,9 +10,13 @@ include_once 'MeasurementEventList.php';
 class CF7EventList extends MeasurementEventList {
 
     public function __construct() {
-        $builder = MeasurementEvent::createBuilder('Contact Form 7')->category('engagement');
-        $builder->action('contact_form_submit')->selector('.wpcf7-form .wpcf7-submit');
-        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $builder = MeasurementEvent::createBuilder([
+            'pluginName' => 'Contact Form 7',
+            'category' => 'engagement',
+            'action' => 'contact_form_submit',
+            'selector' => '.wpcf7-form .wpcf7-submit',
+            'on' => 'click'
+        ]);
         $this->addEvent($builder->build());
     }
 

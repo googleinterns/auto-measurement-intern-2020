@@ -10,9 +10,15 @@ include_once 'MeasurementEventList.php';
 class NinjaFormsEventList extends MeasurementEventList {
 
     public function __construct() {
-        $builder = MeasurementEvent::createBuilder('Ninja Forms')->category('engagement');
-        $builder->action('form_submit')->selector('div.nf-field-container.submit-container [type="button"]');
-        $builder->on('click')->secondLayerSelector('document')->secondLayerOn('nfFormReady');
+        $builder = MeasurementEvent::createBuilder([
+            'pluginName' => 'Ninja Forms',
+            'category' => 'engagement',
+            'action' => 'form_submit',
+            'selector' => 'div.nf-field-container.submit-container [type="button"]',
+            'on' => 'click',
+            'secondLayerSelector' => 'document',
+            'secondLayerOn' => 'nfFormReady'
+        ]);
         $this->addEvent($builder->build());
     }
 

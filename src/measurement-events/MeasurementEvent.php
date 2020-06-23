@@ -7,74 +7,46 @@
  */
 class MeasurementEventBuilder {
 
-    private $pluginName;
-    private $eventCategory;
-    private $eventAction;
-    private $eventCssSelector;
-    private $onEvent;
-    private $secondLayerSelector;
-    private $secondLayerOnEvent;
+    private $configuration;
 
-    function __construct($plugin) {
-        $this->pluginName = $plugin;
-    }
-
-    function category($c) {
-        $this->eventCategory = $c;
-        return $this;
-    }
-
-    function action($a) {
-        $this->eventAction = $a;
-        return $this;
-    }
-
-    function selector($s) {
-        $this->eventCssSelector = $s;
-        return $this;
-    }
-
-    function on($o) {
-        $this->onEvent = $o;
-        return $this;
-    }
-
-    function secondLayerSelector($ss) {
-        $this->secondLayerSelector = $ss;
-        return $this;
-    }
-
-    function secondLayerOn($so) {
-        $this->secondLayerOnEvent = $so;
-        return $this;
+    function __construct(array $config) {
+        $this->configuration = $config;
     }
 
     function getPluginName() {
-        return $this->pluginName;
+        return $this->configuration['pluginName'];
     }
 
     function getCategory() {
-        return $this->eventCategory;
+        return $this->configuration['category'];
     }
 
     function getAction() {
-        return $this->eventAction;
+        return $this->configuration['action'];
     }
 
     function getSelector() {
-        return $this->eventCssSelector;
+        return $this->configuration['selector'];
     }
 
     function getOn() {
-        return $this->onEvent;
+        return $this->configuration['on'];
     }
 
     function getSecondSelector() {
-        return $this->secondLayerSelector;
+        if(array_key_exists('secondLayerSelector', $this->configuration)) {
+            return $this->configuration['secondLayerSelector'];
+        }else{
+            return null;
+        }
     }
 
     function getSecondOn() {
-        return $this->secondLayerOnEvent;
+        if(array_key_exists('secondLayerOn', $this->configuration)) {
+            return $this->configuration['secondLayerOn'];
+        }else{
+            return null;
+        }
     }
 
     /**

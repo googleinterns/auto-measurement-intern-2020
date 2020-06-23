@@ -10,9 +10,13 @@ include_once 'MeasurementEventList.php';
 class WPFormsEventList extends MeasurementEventList {
 
     public function __construct() {
-        $builder = MeasurementEvent::createBuilder('WPForms')->category('engagement');
-        $builder->action('form_submit')->selector('.wpforms-submit-container button');
-        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $builder = MeasurementEvent::createBuilder([
+            'pluginName' => 'WPForms',
+            'category' => 'engagement',
+            'action' => 'form_submit',
+            'selector' => '.wpforms-submit-container button',
+            'on' => 'click'
+        ]);
         $this->addEvent($builder->build());
     }
 

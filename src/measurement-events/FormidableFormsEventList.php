@@ -10,9 +10,13 @@ include_once 'MeasurementEventList.php';
 class FormidableFormsEventList extends MeasurementEventList {
 
     public function __construct() {
-        $builder = MeasurementEvent::createBuilder('Formidable Forms')->category('engagement');
-        $builder->action('contact_form_submit')->selector('.frm_fields_container .frm_button_submit');
-        $builder->on('click')->secondLayerSelector(null)->secondLayerOn(null);
+        $builder = MeasurementEvent::createBuilder([
+            'pluginName' => 'Formidable Forms',
+            'category' => 'engagement',
+            'action' => 'contact_form_submit',
+            'selector' => '.frm_fields_container .frm_button_submit',
+            'on' => 'click'
+        ]);
         $this->addEvent($builder->build());
     }
 
