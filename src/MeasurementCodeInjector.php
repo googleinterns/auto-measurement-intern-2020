@@ -66,8 +66,8 @@ class MeasurementCodeInjector {
      * Creates list of measurement event configurations and javascript to inject
      */
     public function injectEventTracking() {
-        ?>
-        <script>
+
+        ?><script>
             /**
              * Keeps track of Ninja forms that have already been tracked
              *
@@ -122,7 +122,7 @@ class MeasurementCodeInjector {
                     }
                 }
             });
-        </script>
-        <?php
+        </script><?php
+
     }
 }
