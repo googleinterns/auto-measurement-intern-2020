@@ -1,4 +1,5 @@
 <?php
+include 'PluginDetector.php';
 include 'MeasurementCodeInjector.php';
 
 /**
@@ -15,12 +16,21 @@ final class Shirshu{
      */
     private $supportedPlugins;
 
+
+
     /**
      * Single instance of the class
      *
      * @var Shirshu
      */
     protected static $instance = null;
+
+    /**
+     * Instance of the plugin detector
+     *
+     * @var PluginDetector
+     */
+    protected $pluginDetector = null;
 
     /**
      * Instance of the event injector
@@ -48,7 +58,8 @@ final class Shirshu{
     private function __construct(){
         $this->supportedPlugins = array('Contact Form 7', 'Formidable Forms', 'Ninja Forms', 'WooCommerce', 'WPForms',
             'WPForms Lite');
-        $this->measureCodeInjector = new MeasurementCodeInjector($this->supportedPlugins);
+        $this->pluginDetector = new PluginDetector($this->supportedPlugins);
+        add_action('plugins_loaded', array($this, 'getActivePlugins'));
     }
 
     /**
@@ -58,6 +69,14 @@ final class Shirshu{
      */
     protected function getSupportedPlugins(){
         return $this->supportedPlugins;
+    }
+
+    /**
+     * Determines active plugins once WordPress loads plugins
+     */
+    public function getActivePlugins() {
+        $activePlugins = $this->pluginDetector->getActivePlugins();
+        $this->measureCodeInjector = new MeasurementCodeInjector($activePlugins);
     }
 
 }

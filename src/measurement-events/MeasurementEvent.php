@@ -116,6 +116,35 @@ class MeasurementEvent implements JsonSerializable {
      */
     private $secondLayerOnEvent;
 
+
+    function getPluginName() {
+        return $this->pluginName;
+    }
+
+    function getCategory() {
+        return $this->eventCategory;
+    }
+
+    function getAction() {
+        return $this->eventAction;
+    }
+
+    function getSelector() {
+        return $this->eventCssSelector;
+    }
+
+    function getOn() {
+        return $this->onEvent;
+    }
+
+    function getSecondSelector() {
+        return $this->secondLayerSelector;
+    }
+
+    function getSecondOn() {
+        return $this->secondLayerOnEvent;
+    }
+
     static function createBuilder($plugin) {
         return new MeasurementEventBuilder($plugin);
     }
