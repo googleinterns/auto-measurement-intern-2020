@@ -69,6 +69,13 @@ class MeasurementCodeInjector {
         }
         ?>
         <script>
+            /**
+             * Checks if the DOM event matches the Measurement Event or if any element in its path does
+             *
+             * @param e - DOM Event
+             * @param config - Measurement Event configuration
+             * @return {boolean}
+             */
             function pathHasMatch(e, config) {
                 let elemList = document.querySelectorAll(config.selector);
                 let measurementEvent;
