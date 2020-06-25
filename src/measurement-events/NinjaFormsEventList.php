@@ -15,9 +15,7 @@ class NinjaFormsEventList extends MeasurementEventList {
             'category' => 'engagement',
             'action' => 'form_submit',
             'selector' => 'div.nf-field-container.submit-container [type="button"]',
-            'on' => 'click',
-            'secondLayerSelector' => 'document',
-            'secondLayerOn' => 'nfFormReady'
+            'on' => 'click'
         ]);
         $this->addEvent($builder->build());
     }

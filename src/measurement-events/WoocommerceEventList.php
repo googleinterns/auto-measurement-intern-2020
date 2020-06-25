@@ -51,9 +51,7 @@ class WoocommerceEventList extends MeasurementEventList {
             'category' => 'ecommerce',
             'action' => 'review_cart',
             'selector' => 'a.added_to_cart.wc-forward',
-            'on' => 'click',
-            'secondLayerSelector' => 'document.body',
-            'secondLayerOn' => 'added_to_cart'
+            'on' => 'click'
         ]);
         $this->addEvent($builder->build());
 
