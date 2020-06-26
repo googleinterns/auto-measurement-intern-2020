@@ -35,14 +35,14 @@ class MeasurementCodeInjector {
     public function __construct($activePlugins) {
         $this->activePlugins = $activePlugins;
         $this->eventFactory = MeasurementEventFactory::getInstance();
-        $this->eventConfigurations = $this->setEventConfigurations();
+        $this->eventConfigurations = $this->buildEventConfigurations();
         add_action('wp_footer', array($this, 'injectEventTracking'), 999);
     }
 
     /**
      * Sets the event configurations
      */
-    public function setEventConfigurations() {
+    public function buildEventConfigurations() {
         $eventConfigurations = array();
         foreach($this->activePlugins as $pluginName) {
             $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);

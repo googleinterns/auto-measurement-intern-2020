@@ -55,8 +55,7 @@ class MeasurementEventTest extends WP_UnitTestCase {
         for ($i = 0; $i < count($measurementEvents); $i++) {
             $found = false;
             foreach($eventConfigurations as $currentEvent) {
-                if ($measurementEvents[$i]->getPluginName() == $currentEvent->getPluginName() &&
-                $measurementEvents[$i]->getSelector() == $currentEvent->getSelector()) {
+                if (json_encode($measurementEvents[$i] === json_encode($currentEvent))) {
                     $found = true;
                     break;
                 }
