@@ -33,22 +33,6 @@ class MeasurementEventBuilder {
         return $this->configuration['on'];
     }
 
-    function getSecondSelector() {
-        if(array_key_exists('secondLayerSelector', $this->configuration)) {
-            return $this->configuration['secondLayerSelector'];
-        }else{
-            return null;
-        }
-    }
-
-    function getSecondOn() {
-        if(array_key_exists('secondLayerOn', $this->configuration)) {
-            return $this->configuration['secondLayerOn'];
-        }else{
-            return null;
-        }
-    }
-
     /**
      * returns MeasurementEvent object once all params have been set
      *
@@ -102,49 +86,6 @@ class MeasurementEvent implements JsonSerializable {
      */
     private $onEvent;
 
-    /**
-     * Selector for element that contains the event to bind to when inner element is ready to be tracked.
-     *
-     * @var string
-     */
-    private $secondLayerSelector;
-
-    /**
-     * Second layer event to bind to that says when element is ready to be tracked
-     *
-     * @var string
-     */
-    private $secondLayerOnEvent;
-
-
-    function getPluginName() {
-        return $this->pluginName;
-    }
-
-    function getCategory() {
-        return $this->eventCategory;
-    }
-
-    function getAction() {
-        return $this->eventAction;
-    }
-
-    function getSelector() {
-        return $this->eventCssSelector;
-    }
-
-    function getOn() {
-        return $this->onEvent;
-    }
-
-    function getSecondSelector() {
-        return $this->secondLayerSelector;
-    }
-
-    function getSecondOn() {
-        return $this->secondLayerOnEvent;
-    }
-
     static function createBuilder($plugin) {
         return new MeasurementEventBuilder($plugin);
     }
@@ -155,8 +96,6 @@ class MeasurementEvent implements JsonSerializable {
         $this->eventAction = $builder->getAction();
         $this->eventCssSelector = $builder->getSelector();
         $this->onEvent = $builder->getOn();
-        $this->secondLayerSelector = $builder->getSecondSelector();
-        $this->secondLayerOnEvent = $builder->getSecondOn();
     }
 
     public function jsonSerialize() {
@@ -165,9 +104,7 @@ class MeasurementEvent implements JsonSerializable {
             'category' => $this->eventCategory,
             'action' => $this->eventAction,
             'selector' => $this->eventCssSelector,
-            'on' => $this->onEvent,
-            'secondLayerSelector' => $this->secondLayerSelector,
-            'secondLayerOn' => $this->secondLayerOnEvent
+            'on' => $this->onEvent
         ];
     }
 

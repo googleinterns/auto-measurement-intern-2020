@@ -51,9 +51,7 @@ class WoocommerceEventList extends MeasurementEventList {
             'category' => 'ecommerce',
             'action' => 'review_cart',
             'selector' => 'a.added_to_cart.wc-forward',
-            'on' => 'click',
-            'secondLayerSelector' => 'document.body',
-            'secondLayerOn' => 'added_to_cart'
+            'on' => 'click'
         ]);
         $this->addEvent($builder->build());
 
@@ -98,6 +96,15 @@ class WoocommerceEventList extends MeasurementEventList {
             'category' => 'ecommerce',
             'action' => 'place_order',
             'selector' => '.woocommerce-page form.woocommerce-checkout',
+            'on' => 'click'
+        ]);
+        $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder([
+            'pluginName' => 'Woocommerce',
+            'category' => 'ecommerce',
+            'action' => 'product_details',
+            'selector' => '.woocommerce-page .woocommerce-cart-form .product-name a',
             'on' => 'click'
         ]);
         $this->addEvent($builder->build());
