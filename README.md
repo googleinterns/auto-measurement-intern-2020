@@ -1,4 +1,6 @@
 # Auto Measurement Intern Project 2020
+From the Avatar the Last Airbender wikipedia page: "The shirshu is a large, quadrupedal creature found in the southern Earth Kingdom where it lives underground. Its highly developed sense of smell and ability to paralyze a target make it well suited for both tracking and hunting respectively."
+
 **This is not an officially supported Google product.**
 
 

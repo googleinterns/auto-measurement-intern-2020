@@ -1,5 +1,4 @@
 <?php
-include 'PluginDetector.php';
 include 'MeasurementEventFactory.php';
 
 /**
@@ -23,13 +22,6 @@ class MeasurementCodeInjector {
     private $eventConfigurations;
 
     /**
-     * Plugin PluginDetector
-     *
-     * @var PluginDetector
-     */
-    private $pluginDetector = null;
-
-    /**
      * MeasurementEventFactory instance
      *
      * @var MeasurementEventFactory
@@ -38,35 +30,42 @@ class MeasurementCodeInjector {
 
     /**
      * Injector constructor.
-     * @param $supportedPlugins
+     * @param $activePlugins
      */
-    public function __construct($supportedPlugins) {
-        $this->eventConfigurations = array();
-        $this->pluginDetector = new PluginDetector($supportedPlugins);
+    public function __construct($activePlugins) {
+        $this->activePlugins = $activePlugins;
         $this->eventFactory = MeasurementEventFactory::getInstance();
-        add_action('plugins_loaded', array($this, 'setActivePlugins'));
+        $this->eventConfigurations = $this->buildEventConfigurations();
         add_action('wp_head', array($this, 'injectEventTracking'), 1);
     }
 
     /**
-     * Determines active plugins once WordPress loads plugins
+     * Sets the event configurations
      */
-    public function setActivePlugins() {
-        $this->activePlugins = $this->pluginDetector->getActivePlugins();
+    public function buildEventConfigurations() {
+        $eventConfigurations = array();
+        foreach($this->activePlugins as $pluginName) {
+            $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);
+            if($measurementEventList != null) {
+                foreach ($measurementEventList->getEvents() as $measurementEvent) {
+                    array_push($eventConfigurations, $measurementEvent);
+                }
+            }
+        }
+        return $eventConfigurations;
+    }
+
+    /**
+     * Gets the event configurations
+     */
+    public function getEventConfigurations() {
+        return $this->eventConfigurations;
     }
 
     /**
      * Creates list of measurement event configurations and javascript to inject
      */
     public function injectEventTracking() {
-        foreach($this->activePlugins as $pluginName) {
-            $measurementEventList = $this->eventFactory->createMeasurementEventList($pluginName);
-            if($measurementEventList != null) {
-                foreach ($measurementEventList->getEvents() as $measurementEvent) {
-                    array_push($this->eventConfigurations, $measurementEvent);
-                }
-            }
-        }
         ?>
         <script>
             let eventConfigurations = <?php echo json_encode($this->eventConfigurations); ?>;
