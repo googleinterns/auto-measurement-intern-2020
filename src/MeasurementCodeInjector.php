@@ -77,19 +77,11 @@ class MeasurementCodeInjector {
              * @return {boolean}
              */
             function pathHasMatch(e, config) {
-                let elemList = document.querySelectorAll(config.selector);
-                let measurementEvent;
-                for(measurementEvent of elemList) {
-                    if(e.target === measurementEvent) {
+                let path = e.path;
+                let pathElem;
+                for(pathElem of path) {
+                    if(pathElem.matches(config.selector)) {
                         return true;
-                    }
-
-                    let path = e.path;
-                    let pathElem;
-                    for(pathElem of path) {
-                        if(pathElem === measurementEvent) {
-                            return true;
-                        }
                     }
                 }
                 return false;

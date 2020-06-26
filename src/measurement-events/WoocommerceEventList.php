@@ -99,6 +99,15 @@ class WoocommerceEventList extends MeasurementEventList {
             'on' => 'click'
         ]);
         $this->addEvent($builder->build());
+
+        $builder = MeasurementEvent::createBuilder([
+            'pluginName' => 'Woocommerce',
+            'category' => 'ecommerce',
+            'action' => 'product_details',
+            'selector' => '.woocommerce-page .woocommerce-cart-form .product-name a',
+            'on' => 'click'
+        ]);
+        $this->addEvent($builder->build());
     }
 
 }
