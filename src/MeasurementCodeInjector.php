@@ -69,30 +69,14 @@ class MeasurementCodeInjector {
         }
         ?>
         <script>
-            /**
-             * Checks if the DOM event matches the Measurement Event or if any element in its path does
-             *
-             * @param e - DOM Event
-             * @param config - Measurement Event configuration
-             * @return {boolean}
-             */
-            function pathHasMatch(e, config) {
-                let path = e.path;
-                let pathElem;
-                for(pathElem of path) {
-                    if(pathElem.matches(config.selector)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-
             let eventConfigurations = <?php echo json_encode($this->eventConfigurations); ?>;
             let config;
             for(config of eventConfigurations) {
                 const thisConfig = config;
                 document.addEventListener(config.on, function(e){
-                    if(pathHasMatch(e, thisConfig)) {
+                    if(e.target.matches(thisConfig.selector)) {
+                        alert('Got an event called: '.concat(thisConfig.action));
+                    }else if(e.target.matches(thisConfig.selector.concat(' *'))){
                         alert('Got an event called: '.concat(thisConfig.action));
                     }
                 }, true)
