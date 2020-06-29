@@ -26,15 +26,12 @@ class PluginDetector {
      * @return array of strings
      */
     public function getActivePlugins() {
-        $plugins = get_option('active_plugins');
         $plugin_keys = array_keys($this->supportedPlugins);
         $activePlugins = array();
 
         foreach ($plugin_keys as $key) {
-            foreach ($plugins as $plugin) {
-                if ($this->supportedPlugins[$key] == substr($plugin, 0, strpos($plugin, '/'))) {
-                    array_push($activePlugins, $key);
-                }
+            if (defined($this->supportedPlugins[$key]) || function_exists($this->supportedPlugins[$key])) {
+                array_push($activePlugins, $key);
             }
         }
 
