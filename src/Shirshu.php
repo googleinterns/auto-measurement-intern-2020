@@ -56,8 +56,12 @@ final class Shirshu{
      * Shirshu constructor
      */
     private function __construct(){
-        $this->supportedPlugins = array('Contact Form 7', 'Formidable Forms', 'Ninja Forms', 'WooCommerce', 'WPForms',
-            'WPForms Lite');
+        $this->supportedPlugins = array('Contact Form 7' => 'contact-form-7',
+            'Formidable Forms' => 'formidable',
+            'Ninja Forms' => 'ninja-forms',
+            'WooCommerce' => 'woocommerce',
+            'WPForms' => 'wpforms',
+            'WPForms Lite' => 'wpforms-lite');
         $this->pluginDetector = new PluginDetector($this->supportedPlugins);
         add_action('plugins_loaded', array($this, 'getActivePlugins'));
     }
