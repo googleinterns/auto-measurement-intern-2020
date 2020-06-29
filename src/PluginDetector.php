@@ -1,12 +1,5 @@
 <?php
 /**
- * Gives access to the WordPress plugin API
- */
-if (!function_exists('get_plugins')) {
-    require_once ABSPATH . 'wp-admin/includes/plugin.php';
-}
-
-/**
  * Detects the user's current active plugins that Shirshu supports
  *
  * Class PluginDetector
@@ -33,14 +26,15 @@ class PluginDetector {
      * @return array of strings
      */
     public function getActivePlugins() {
-        $plugins = get_plugins();
-        $plugin_keys = array_keys($plugins);
+        $plugins = get_option('active_plugins');
+        $plugin_keys = array_keys($this->supportedPlugins);
         $activePlugins = array();
 
-        foreach ($plugin_keys as $plugin_key) {
-            $potentialPluginName = $plugins[$plugin_key]['Name'];
-            if (in_array($potentialPluginName, $this->supportedPlugins) && is_plugin_active( $plugin_key)) {
-                array_push($activePlugins, $potentialPluginName);
+        foreach ($plugin_keys as $key) {
+            foreach ($plugins as $plugin) {
+                if ($this->supportedPlugins[$key] == substr($plugin, 0, strpos($plugin, '/'))) {
+                    array_push($activePlugins, $key);
+                }
             }
         }
 
