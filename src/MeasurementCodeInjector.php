@@ -66,8 +66,7 @@ class MeasurementCodeInjector {
      * Creates list of measurement event configurations and javascript to inject
      */
     public function injectEventTracking() {
-        ?>
-        <script>
+        ?><script>
             let eventConfigurations = <?php echo json_encode($this->eventConfigurations); ?>;
             let config;
             for(config of eventConfigurations) {
@@ -78,9 +77,8 @@ class MeasurementCodeInjector {
                     }else if(e.target.matches(thisConfig.selector.concat(' *'))){
                         alert('Got an event called: '.concat(thisConfig.action));
                     }
-                }, true)
+                }, true);
             }
-        </script>
-        <?php
+        </script><?php
     }
 }
